@@ -36,6 +36,20 @@ def save_h5(x_data, y_data, file_name):
     f.close()
 
 
+def load_h5(file_path):
+    """
+    读取 .h5文件
+    :param file_path:需要读取的文件路径名
+    :return:
+    """
+    # 读取h5文件
+    h5f = h5py.File(file_path, 'r')
+    image = h5f['image'][:]
+    label = h5f['label'][:]
+    print(type(image), type(label))
+    print(image.shape, label.shape)
+
+
 def GainNorm(data):
     """
     归一化数据
@@ -187,10 +201,10 @@ def new_covert_h5():
     :return:
     """
     # out_shape = [128, 128, 128]  # 输出的大小
-    image_path = r'../OriginalData/image'  # 原图像路径
-    label_path = r'../OriginalData/label'  # 原标签路径
-
-    output_path3 = r'../TrainData/nii_train_h5'  # 输出是 image.shape 的 .h5文件路径  我训练用的是这个
+    image_path = r'F:\pythonProject\Datasets\ForROI\RT_CBCT_ROI/image'  # 原图像路径
+    label_path = r'F:\pythonProject\Datasets\ForROI\RT_CBCT_ROI/label'  # 原标签路径
+    # 输出是 image.shape 的 .h5文件路径  我训练用的是这个
+    output_path3 = r'F:\pythonProject\Datasets\ForROI\RT_CBCT_ROI/nii_train_h5'
 
     make_dir(output_path3)
 
@@ -210,25 +224,32 @@ def new_covert_h5():
         y_data = label_object.get_fdata()
 
         # 2、归一化
-        # x_norm = GainNorm(x_data)
-        # y_norm = GainNorm(y_data)
-        print(case, x_data.shape, y_data.shape)
+        x_norm = GainNorm(x_data)
+        y_norm = GainNorm(y_data)
+        # print(case, x_data.shape, y_data.shape, x_data.max(), y_data.max())
         # break
 
         # 3、保存到 .h5文件路径  我训练用的是这个
-        # case_dir3 = os.path.join(output_path3, case.split('.')[0] + '_norm.h5')
-        # save_h5(x_norm, y_norm, case_dir3)
-        # print(f'norm_h5 save at:{case_dir3}')
+        case_dir3 = os.path.join(output_path3, case.split('.')[0] + '_norm.h5')
+        save_h5(x_norm, y_norm, case_dir3)
+        print(f'norm_h5 save at:{case_dir3}')
 
 
-def load_nii():
-    nii_path = r'E:\Jupter\ctooth\OriginalData\image\CBCT2209135.nii.gz'
+def load_nii(nii_path):
     nii_object = nib.load(nii_path)
     nii_numpy = nii_object.get_fdata()
     print(nii_numpy.shape)
 
 
 if __name__ == '__main__':
-    new_covert_h5()
-    # load_nii()
+    # 1、查看单个.nii.gz文件
+    # nii_path = r'E:\Jupter\ctooth\OriginalData\image\CBCT2209135.nii.gz'
+    # load_nii(nii_path)
+
+    # 2、对图像和标签进行转换
+    # new_covert_h5()
+
+    # 3、查看转换后的数据
+    file_path = r'F:\pythonProject\Datasets\ForROI\RT_CBCT_ROI/nii_train_h5\CBCT2208200_norm.h5'
+    load_h5(file_path)
 
