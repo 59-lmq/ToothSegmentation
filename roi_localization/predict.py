@@ -12,10 +12,6 @@ from networks.vnet import VNet
 from loguru import logger
 
 
-# 测试训练出来的 .pth
-# 找的别人的代码，中间不知道发生了啥，反正输出就是 原图、原标签和预测标签的nii.gz
-
-
 def calculate_metric_percase(pred, gt):
     dice = metric.binary.dc(pred, gt)
     jc = metric.binary.jc(pred, gt)
@@ -144,13 +140,13 @@ def make_dir(dir_path):
 
 
 def teeth_predict():
-    exp_name = 'exp_2023_03_22_5_multi_test'
+    exp_name = 'exp_name'
     snapshot_path = "../experiments/" + exp_name
 
     log_path = os.path.join(snapshot_path, 'log/predict_')
     logger.add(log_path + '{time}.log', rotation='00:00')
 
-    data_path = r'F:\pythonProject\Datasets\TeethData\3D\HandedROIData\RT_CBCT_data_17\nii_data\data_list'  # 存放数据名称的列表
+    data_path = r'.\nii_data\data_list'  # 存放数据名称的列表
     data_name = os.path.join(data_path, 'test_binary.list')
     test_save_path = '../results/' + exp_name  # 模型出来后的nii.gz的保存位置
     make_dir(test_save_path)
