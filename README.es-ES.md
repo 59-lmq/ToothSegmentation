@@ -1,5 +1,5 @@
 # ToothSegmentation
-Reproducción de la red ROI basada en el artículo de Natrue Compression.
+Reproducción de la red ROI basada en el artículo de nature communications.
 Nombre del artículo: 《A fully automatic AI system for tooth and alveolar bone segmentation from cone-beam CT images》
 
 https://github.com/ErdanC/Tooth-and-alveolar-bone-segmentation-from-CBCT
