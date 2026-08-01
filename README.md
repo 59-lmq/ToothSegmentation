@@ -1,5 +1,5 @@
 # ToothSegmentation
-基于Natrue Compression 论文 进行ROI 网络复现。
+基于 nature communications 论文 进行ROI 网络复现。
 论文名称《A fully automatic AI system for tooth and alveolar bone segmentation from cone-beam CT images》
 
 https://github.com/ErdanC/Tooth-and-alveolar-bone-segmentation-from-CBCT
